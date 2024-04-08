@@ -1,0 +1,10 @@
+.anime-steps-outer{
+    padding: 20px;
+}
+
+.anime-steps{
+    padding: 20px;
+    font-size: 30px;
+    text-align: center;
+    box-shadow: 0 8px 10px rgba(0, 0, 0, 0.2);
+}

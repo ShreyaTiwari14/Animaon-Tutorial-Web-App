@@ -1,0 +1,79 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>YouTube Video Player</title>
+  <style>
+    #video-container {
+      display: flex;
+      flex-wrap: wrap;
+    }
+    .thumbnail {
+      width: 120px;
+      height: 90px;
+      margin: 10px;
+      cursor: pointer;
+    }
+  </style>
+</head>
+<body>
+
+  <div id="video-container">
+    <!-- Thumbnails will be dynamically added here -->
+  </div>
+
+  <div id="player"></div>
+
+  <script>
+    // Replace 'VIDEO_ID_1', 'VIDEO_ID_2', etc., with the actual YouTube video IDs
+    const videoIds = ['VIDEO_ID_1', 'VIDEO_ID_2', 'VIDEO_ID_3'];
+
+    // Create video thumbnails
+    const videoContainer = document.getElementById('video-container');
+    videoIds.forEach(videoId => {
+      const thumbnail = document.createElement('img');
+      thumbnail.src = `https://img.youtube.com/vi/${videoId}/0.jpg`;
+      thumbnail.alt = `Video Thumbnail ${videoId}`;
+      thumbnail.classList.add('thumbnail');
+      thumbnail.addEventListener('click', () => playVideo(videoId));
+      videoContainer.appendChild(thumbnail);
+    });
+
+    // Initialize YouTube API
+    const tag = document.createElement('script');
+    tag.src = 'https://www.youtube.com/iframe_api';
+    const firstScriptTag = document.getElementsByTagName('script')[0];
+    firstScriptTag.parentNode.insertBefore(tag, firstScriptTag);
+
+    let player;
+
+    function onYouTubeIframeAPIReady() {
+      player = new YT.Player('player', {
+        height: '360',
+        width: '640',
+        videoId: videoIds[0], // Initial video
+        playerVars: {
+          'autoplay': 0,
+          'controls': 1,
+          'showinfo': 0,
+          'rel': 0,
+          'modestbranding': 1,
+        },
+        events: {
+          'onReady': onPlayerReady,
+        },
+      });
+    }
+
+    function onPlayerReady(event) {
+      // You can do something when the player is ready
+    }
+
+    function playVideo(videoId) {
+      player.loadVideoById(videoId);
+    }
+  </script>
+
+</body>
+</html>
